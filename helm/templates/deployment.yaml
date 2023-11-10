@@ -1,0 +1,74 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "midserver.fullname" . }}
+  labels:
+    {{- include "midserver.labels" . | nindent 4 }}
+spec:
+  {{- if not .Values.autoscaling.enabled }}
+  replicas: {{ .Values.replicaCount }}
+  {{- end }}
+  selector:
+    matchLabels:
+      {{- include "midserver.selectorLabels" . | nindent 6 }}
+  template:
+    metadata:
+      {{- with .Values.podAnnotations }}
+      annotations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      labels:
+        {{- include "midserver.selectorLabels" . | nindent 8 }}
+    spec:
+      {{- with .Values.imagePullSecrets }}
+      imagePullSecrets:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      serviceAccountName: {{ include "midserver.serviceAccountName" . }}
+      securityContext:
+        {{- toYaml .Values.podSecurityContext | nindent 8 }}
+      containers:
+        - name: {{ .Chart.Name }}
+          securityContext:
+            {{- toYaml .Values.securityContext | nindent 12 }}
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          resources:
+            {{- toYaml .Values.resources | nindent 12 }}
+          env:
+            - name: MID_INSTANCE_URL
+              value: {{ .Values.midEnv.MID_INSTANCE_URL }}
+            - name: MID_INSTANCE_USERNAME
+              value: {{ .Values.midEnv.MID_INSTANCE_USERNAME }}
+            - name: MID_INSTANCE_PASSWORD
+              value: {{ .Values.midEnv.MID_INSTANCE_PASSWORD }}
+            - name: MID_SERVER_NAME
+              value: {{ include "midserver.fullname" . }}
+            # - name: MID_SECRETS_FILE
+            #   value: ""
+            # - name: MID_PROXY_HOST
+            #   value: ""
+            # - name: MID_PROXY_PORT
+            #   value: ""
+            # - name: MID_PROXY_USERNAME
+            #   value: ""
+            # - name: MID_PROXY_PASSWORD
+            #   value: ""
+            # - name: MID_MUTUAL_AUTH_PEM_FILE
+            #   value: ""
+            # - name: MID_SSL_BOOTSTRAP_CERT_REVOCATION_CHECK
+            #   value: ""
+            # - name: MID_SSL_USE_INSTANCE_SECURITY_POLICY
+            #   value: ""
+      {{- with .Values.nodeSelector }}
+      nodeSelector:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.affinity }}
+      affinity:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.tolerations }}
+      tolerations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
