@@ -1,11 +1,28 @@
-## Installing Mid Server
+# Running Mid Server
+
 
 ```
-    kubectl create namespace servicenow
+helm repo add nowmidserver https://sannrao.github.io/now-midserver/
+
+helm install demomidserver1 nowmidserver/midserver --set midEnv.MID_INSTANCE_URL=https://my.service-now.com --set midEnv.MID_INSTANCE_USERNAME=mid  --set midEnv.MID_INSTANCE_PASSWORD=$MID_PASSWORD
 ```
 
+## Publising the chart
+
+### Check for any issues
+
 ```
-kubectl create secret docker-registry regcred --docker-server=registry.k8s.sndevops.xyz --docker-username=<> --docker-password=<> --docker-email=registry@sndevops.xyz
+helm lint helm
 ```
 
-helm template demomidserver1 ./ --set midEnv.MID_INSTANCE_URL=https://empsnrao1.service-now.com --set midEnv.MID_INSTANCE_USERNAME=mid  --set midEnv.MID_INSTANCE_PASSWORD=$MID_PASSWORD --set midEnv.MID_SERVER_NAME=demomidserver1
+### Create Package
+
+```
+helm package helm
+```
+
+### Create index
+
+```
+helm repo index --url https://sannrao.github.io/now-midserver/ .
+```

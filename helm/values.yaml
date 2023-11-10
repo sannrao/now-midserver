@@ -5,21 +5,20 @@
 replicaCount: 1
 
 image:
-  repository: registry.k8s.sndevops.xyz/nowmidserver
+  repository: sannrao/nowmidserver
   pullPolicy: IfNotPresent
   tag: "utah_patch7a-09-28-2023"
 
 
-imagePullSecrets:
-- name: regcred
+imagePullSecrets: {}
 
 nameOverride: ""
 fullnameOverride: ""
 
 midEnv:
   MID_INSTANCE_URL: "myinstance.service-now.com"
-  MID_INSTANCE_USERNAME: "<>"
-  MID_INSTANCE_PASSWORD: "<>"
+  MID_INSTANCE_USERNAME: "mid"
+  MID_INSTANCE_PASSWORD: "<password>"
 
 serviceAccount:
   # Specifies whether a service account should be created

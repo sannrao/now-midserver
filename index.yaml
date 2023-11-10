@@ -2,13 +2,13 @@ apiVersion: v1
 entries:
   midserver:
   - apiVersion: v2
-    appVersion: 1.16.0
-    created: "2023-11-09T22:24:33.01551-08:00"
-    description: A Helm chart for Kubernetes
-    digest: 3ed8727e398f7b9dc504c029503fc25c4688fdd79d36f65a2823b62c560b62fc
+    appVersion: 1.16.1
+    created: "2023-11-09T22:50:52.984712-08:00"
+    description: A Helm chart for ServiceNow MidServer
+    digest: e277b01a24a2a7b232f68f8f68a5e9bdcc6ad76993a9bfe8576f85401b0a53df
     name: midserver
     type: application
     urls:
-    - https://sannrao.github.io/now-midserver/midserver-0.1.0.tgz
-    version: 0.1.0
-generated: "2023-11-09T22:24:33.014271-08:00"
+    - https://sannrao.github.io/now-midserver/midserver-0.2.0.tgz
+    version: 0.2.0
+generated: "2023-11-09T22:50:52.983923-08:00"
