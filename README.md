@@ -26,3 +26,9 @@ helm package helm
 ```
 helm repo index --url https://sannrao.github.io/now-midserver/ .
 ```
+
+### Push to git
+
+```
+
+```

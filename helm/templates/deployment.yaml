@@ -37,11 +37,23 @@ spec:
             {{- toYaml .Values.resources | nindent 12 }}
           env:
             - name: MID_INSTANCE_URL
-              value: {{ .Values.midEnv.MID_INSTANCE_URL }}
+              valueFrom:
+                secretKeyRef:
+                  name: {{ include "midserver.fullname" .}}-secret
+                  key: MID_INSTANCE_URL
+              # value: {{ .Values.midEnv.MID_INSTANCE_URL }}
             - name: MID_INSTANCE_USERNAME
-              value: {{ .Values.midEnv.MID_INSTANCE_USERNAME }}
+              valueFrom:
+                secretKeyRef:
+                  name: {{ include "midserver.fullname" .}}-secret
+                  key: MID_INSTANCE_USERNAME
+              # value: {{ .Values.midEnv.MID_INSTANCE_USERNAME }}
             - name: MID_INSTANCE_PASSWORD
-              value: {{ .Values.midEnv.MID_INSTANCE_PASSWORD }}
+              valueFrom:
+                secretKeyRef:
+                  name: {{ include "midserver.fullname" .}}-secret
+                  key: MID_INSTANCE_PASSWORD
+              # value: {{ .Values.midEnv.MID_INSTANCE_PASSWORD }}
             - name: MID_SERVER_NAME
               value: {{ include "midserver.fullname" . }}
             # - name: MID_SECRETS_FILE
